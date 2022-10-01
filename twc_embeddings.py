@@ -29,7 +29,7 @@ class SimCSEModel:
             model_name = "princeton-nlp/sup-simcse-roberta-large"
         self.model = SimCSE(model_name)
 
-    def compute_embeddings(self,input_data,is_file):
+    def compute_embeddings(self,input_file_name,input_data,is_file):
         texts = read_text(input_data) if is_file == True else input_data
         embeddings = self.model.encode(texts)
         return texts,embeddings
@@ -61,5 +61,5 @@ if __name__ == '__main__':
         results = parser.parse_args()
         obj = SimCSEModel()
         obj.init_model(results.model)
-        texts, embeddings = obj.compute_embeddings(results.input,is_file = True)
+        texts, embeddings = obj.compute_embeddings(results.input,results.input,is_file = True)
         results = obj.output_results(results.output,texts,embeddings)
